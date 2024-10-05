@@ -24,12 +24,10 @@ function Gallery(props) {
     setPokemons(allPokemons);
   };
   useEffect(()=>{getData()},[])
-  useEffect(() => {
-    data?(console.log(data)):("")
-  }, [data]);
-  useEffect(() => {
-    pokemons?(console.log(pokemons)):("")
-  }, [pokemons]);
+
+  const filteredPokemons = pokemons.filter((pokemon) =>
+    pokemon.data.forms[0].name.toLowerCase().includes(pokename.toLowerCase())
+  );
     return (
         <div id='container'>
             
@@ -39,7 +37,7 @@ function Gallery(props) {
                 <input id='btn' type="button" value="search" />
             </div>
             <div id='gallery'>
-                {pokemons?(pokemons.map((pokemon,index)=>(
+                {filteredPokemons?(filteredPokemons.map((pokemon,index)=>(
                     <div key={index} className='my-pokemon'>
                     <img  src={pokemon.data.sprites.other['official-artwork'].front_default}/>
                     <p> {pokemon.data.forms[0].name}</p>
