@@ -34,8 +34,12 @@ function Gallery(props) {
         <div>
             <div id='search'>
                 <input type="text" placeholder='Search for a pokemon by its name' onChange={(e)=>setName(e.target.value)}/>
+                <input type="button" value="search" />
             </div>
             <div id='gallery'>
+                {pokemons?(pokemons.map((pokemon,index)=>(
+                    <img key={index} src={pokemon.data.sprites.other['official-artwork'].front_default}/>
+                ))):("loading")}
             </div>
         </div>
     );
