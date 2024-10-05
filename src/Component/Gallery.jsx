@@ -5,19 +5,25 @@ import axios from 'axios';
 function Gallery(props) {
     const [data, setData] = useState(null);
     const [pokemons, setPokemons] = useState([]);
-
+    let [pokename,setName] = useState("")
   const getData = async () => {
     let next_res = null
     const response = await axios.get(
       "https://pokeapi.co/api/v2/pokemon?limit=50"
     );
     setData(response);
-    for (const myurl of response.data.results) {
-        next_res = await axios.get(myurl.url);
-        setPokemons((prevPokemons) => [...prevPokemons, next_res]);
-      }
-  };
 
+    const allPokemons = [];
+
+    for (const myurl of response.data.results) {
+      const next_res = await axios.get(myurl.url);
+      allPokemons.push(next_res); // Push the data to the array
+    }
+  
+    // Update the state once with all the collected Pokémon
+    setPokemons(allPokemons);
+  };
+  useEffect(()=>{getData()},[])
   useEffect(() => {
     data?(console.log(data)):("")
   }, [data]);
@@ -26,9 +32,10 @@ function Gallery(props) {
   }, [pokemons]);
     return (
         <div>
-            <div id='search'></div>
+            <div id='search'>
+                <input type="text" placeholder='Search for a pokemon by its name' onChange={(e)=>setName(e.target.value)}/>
+            </div>
             <div id='gallery'>
-                <input type="text" value="button" onClick={()=>getData()} />
             </div>
         </div>
     );
