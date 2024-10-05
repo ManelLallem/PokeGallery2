@@ -1,7 +1,7 @@
 import React from 'react';
 import { useState,useEffect } from 'react';
 import axios from 'axios';
-
+import './gallery.css'
 function Gallery(props) {
     const [data, setData] = useState(null);
     const [pokemons, setPokemons] = useState([]);
@@ -31,14 +31,20 @@ function Gallery(props) {
     pokemons?(console.log(pokemons)):("")
   }, [pokemons]);
     return (
-        <div>
+        <div id='container'>
+            
             <div id='search'>
-                <input type="text" placeholder='Search for a pokemon by its name' onChange={(e)=>setName(e.target.value)}/>
-                <input type="button" value="search" />
+                <h1>Poke Gallery</h1>
+                <input id='search-bar' type="text" placeholder='Search for a pokemon by its name' onChange={(e)=>setName(e.target.value)}/>
+                <input id='btn' type="button" value="search" />
             </div>
             <div id='gallery'>
                 {pokemons?(pokemons.map((pokemon,index)=>(
-                    <img key={index} src={pokemon.data.sprites.other['official-artwork'].front_default}/>
+                    <div key={index} className='my-pokemon'>
+                    <img  src={pokemon.data.sprites.other['official-artwork'].front_default}/>
+                    <p> {pokemon.data.forms[0].name}</p>
+                    </div>
+
                 ))):("loading")}
             </div>
         </div>

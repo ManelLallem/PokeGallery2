@@ -3,9 +3,9 @@ import Gallery from './Component/Gallery';
 
 function App(props) {
   return (
-    <div>
+    <>
       <Gallery/>
-    </div>
+    </>
   );
 }
 
